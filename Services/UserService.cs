@@ -28,6 +28,7 @@ namespace vennAPIRemade.Services
             UserEntity newUser = new();
             newUser.Username = Dto.Username;
             newUser.Email = Dto.Email;
+            // Add functions to generate Salt and Hash functions
             
             UserEntity user = await _userRepository.CreateUser(newUser);
             if(user is null)

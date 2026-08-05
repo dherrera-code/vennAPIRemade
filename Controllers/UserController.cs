@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using vennAPIRemade.Interface;
 using vennAPIRemade.Models.DTO;
-using vennAPIRemade.Services;
 
 namespace vennAPIRemade.Controllers
 {
@@ -8,8 +8,8 @@ namespace vennAPIRemade.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly UserService _userService;
-        public UserController(UserService userService)
+        private readonly IUserService _userService;
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }

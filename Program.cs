@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using vennAPIRemade.Context;
 using vennAPIRemade.Interface;
+using vennAPIRemade.Repository;
 using vennAPIRemade.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
+builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
