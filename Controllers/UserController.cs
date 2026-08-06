@@ -21,7 +21,7 @@ namespace vennAPIRemade.Controllers
             {
                 var result = await _userService.CreateUser(newUser);
                 if (result != null)
-                    return Ok(new { token = result });
+                    return Ok(new { newUser = result });
                 else 
                     return BadRequest("Unable to create account at this time.");
             }
@@ -29,6 +29,12 @@ namespace vennAPIRemade.Controllers
             {
                 return BadRequest(exception.Message);
             }
+        }
+
+        [HttpGet("GetAllUsers")]
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers()
+        {
+            return Ok(await _userService.GetAllUsers());
         }
     }
 }
