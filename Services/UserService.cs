@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.IdentityModel.Tokens;
 using vennAPIRemade.Interface;
 using vennAPIRemade.Models.DTO;
@@ -73,7 +74,12 @@ namespace vennAPIRemade.Services
             if (!VerifyPassword(userLogin.Password, currentUser.Salt, currentUser.Hash))
                 return null;
 
-            return GenerateJWT(new List<Claim>());
+            var claims = new List<Claim>
+            {
+                new Claim("sub", currentUser.Id.ToString())
+            };
+
+            return GenerateJWT(claims);
         }
 
         // Helper Functions
