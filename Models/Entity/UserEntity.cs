@@ -11,8 +11,8 @@ namespace vennAPIRemade.Models.Entity
         public string Email { get; set; }
         public string Salt { get; set; }
         public string Hash { get; set; }
-        public string Description { get; set; }
-        public string UserIcon { get; set; }
+        public string? Description { get; set; }
+        public string? UserIcon { get; set; }
         public DateTime AccountCreated { get; set; } = DateTime.UtcNow;
         
     }

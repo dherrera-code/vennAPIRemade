@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using vennAPIRemade.Interface;
 using vennAPIRemade.Models.DTO;
@@ -13,9 +14,11 @@ namespace vennAPIRemade.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly IMapper _mapper;
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
         public async Task<UserDTO> CreateUser(NewUserDTO Dto)
         {
@@ -23,10 +26,8 @@ namespace vennAPIRemade.Services
             bool result = await _userRepository.DoesUsernameExist(Dto.Username);
             if (result || await _userRepository.DoesEmailExist(Dto.Email))
             {
-                throw new Exception("Username or Email is in current use. Unable to Create Account");
+                throw new Exception("Username or Email is in current use. Unable to Create Account.");
             }
-
-
             // map out new entity
             UserEntity newUser = new();
             PasswordDTO EncryptedPassword = HashPassword(Dto.Password);
@@ -52,9 +53,8 @@ namespace vennAPIRemade.Services
         public async Task<IEnumerable<UserDTO>> GetAllUsers()
         {
             var userList = await _userRepository.GetAllUsers();
-            //install automapper
-
-            throw new NotImplementedException();
+            
+            return _mapper.Map<IEnumerable<UserDTO>>(userList);
         }
 
         // Helper Functions

@@ -21,11 +21,11 @@ namespace vennAPIRemade.Controllers
             {
                 var result = await _userService.CreateUser(newUser);
                 if (result != null)
-                    return Ok(new { newUser = result });
+                    return Ok(result);
                 else 
                     return BadRequest("Unable to create account at this time.");
             }
-            catch (InvalidDataException exception)
+            catch (Exception exception)
             {
                 return BadRequest(exception.Message);
             }
