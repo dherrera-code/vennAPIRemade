@@ -14,5 +14,6 @@ namespace vennAPIRemade.Interface
         Task<bool> DoesUsernameExist(string username);
         Task<bool> DoesEmailExist(string email);
         Task<IEnumerable<UserEntity>> GetAllUsers();
+        Task<UserEntity> GetUserByUsernameOrEmail(string username);
     }
 }

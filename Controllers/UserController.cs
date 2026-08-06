@@ -31,6 +31,19 @@ namespace vennAPIRemade.Controllers
             }
         }
 
+        [HttpPost("Login")]
+        public async Task<ActionResult> Login(LoginDTO userLogin)
+        {
+            var success = await _userService.Login(userLogin);
+
+            if(success is null)
+            return Unauthorized(new {Message = "Login was unsuccessful"});
+
+            return Ok(new {Token = success});
+        }
+
+        // Get User By Id
+
         [HttpGet("GetAllUsers")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers()
         {

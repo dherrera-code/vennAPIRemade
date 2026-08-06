@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using vennAPIRemade.Interface;
 using vennAPIRemade.Models.DTO;
 using vennAPIRemade.Models.Entity;
@@ -15,10 +19,13 @@ namespace vennAPIRemade.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        private readonly IConfiguration _config;
+
+        public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration config)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _config = config;
         }
         public async Task<UserDTO> CreateUser(NewUserDTO Dto)
         {
@@ -53,8 +60,20 @@ namespace vennAPIRemade.Services
         public async Task<IEnumerable<UserDTO>> GetAllUsers()
         {
             var userList = await _userRepository.GetAllUsers();
-            
+
             return _mapper.Map<IEnumerable<UserDTO>>(userList);
+        }
+
+        public async Task<string> Login(LoginDTO userLogin)
+        {
+            var currentUser = await _userRepository.GetUserByUsernameOrEmail(userLogin.Username);
+
+            if (currentUser is null) return null;
+
+            if (!VerifyPassword(userLogin.Password, currentUser.Salt, currentUser.Hash))
+                return null;
+
+            return GenerateJWT(new List<Claim>());
         }
 
         // Helper Functions
@@ -76,6 +95,33 @@ namespace vennAPIRemade.Services
             };
         }
 
+        private static bool VerifyPassword(string password, string salt, string hash)
+        {
+            byte[] saltByte = Convert.FromBase64String(salt);
+            string checkHash;
+            using (var derivedBytes = new Rfc2898DeriveBytes(password, saltByte, 310000, HashAlgorithmName.SHA256))
+            {
+                checkHash = Convert.ToBase64String(derivedBytes.GetBytes(32));
+                return hash == checkHash;
+            }
+        }
+
+        private string GenerateJWT(List<Claim> claims)
+        {
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
+
+            var SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+            var tokenOptions = new JwtSecurityToken(
+                issuer: "https://vennbackendapi-akghachgbhgdccfe.westus3-01.azurewebsites.net/",
+                audience: "https://vennbackendapi-akghachgbhgdccfe.westus3-01.azurewebsites.net/",
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(45),
+                signingCredentials: SigningCredentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+        }
 
     }
 }

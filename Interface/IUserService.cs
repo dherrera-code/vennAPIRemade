@@ -11,5 +11,6 @@ namespace vennAPIRemade.Interface
     {
         Task<UserDTO> CreateUser(NewUserDTO Dto);
         Task<IEnumerable<UserDTO>> GetAllUsers();
+        Task<string> Login(LoginDTO userLogin);
     }
 }

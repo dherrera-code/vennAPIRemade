@@ -38,5 +38,10 @@ namespace vennAPIRemade.Repository
         {
             return await _context.Users.AsNoTracking().ToListAsync();
         }
+
+        public async Task<UserEntity> GetUserByUsernameOrEmail(string username)
+        {
+            return await _context.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Username == username || user.Email == username);
+        }
     }
 }
