@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using vennAPIRemade.Models.DTO;
 
 namespace vennAPIRemade.Interface
 {
-    public interface IUserService
+    public interface IAuthService
     {
-        Task<IEnumerable<UserDTO>> GetAllUsers();
-        Task<UserDTO> UpdateUser(string userId, UserDTO updatedUser);
+        Task<UserDTO> CreateUser(NewUserDTO Dto);
+        Task<string> Login(LoginDTO userLogin);
     }
 }

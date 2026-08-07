@@ -1,15 +1,10 @@
 using System.Text;
-using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using vennAPIRemade.Context;
 using vennAPIRemade.Interface;
-using vennAPIRemade.Models.DTO;
-using vennAPIRemade.Models.Entity;
 using vennAPIRemade.Repository;
 using vennAPIRemade.Services;
 
@@ -43,6 +38,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // builder.Services.AddAutoMapper(typeof(Program));

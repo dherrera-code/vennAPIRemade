@@ -39,9 +39,23 @@ namespace vennAPIRemade.Repository
             return await _context.Users.AsNoTracking().ToListAsync();
         }
 
+        public async Task<UserEntity> GetUserById(int userId)
+        {
+            return await _context.Users.FindAsync(userId);
+        }
+
         public async Task<UserEntity> GetUserByUsernameOrEmail(string username)
         {
             return await _context.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Username == username || user.Email == username);
+        }
+
+        public async Task<UserEntity> UpdateUserInfo(UserEntity user)
+        {
+            _context.Users.Update(user);
+            bool success = await _context.SaveChangesAsync() != 0;
+            if(!success) throw new Exception("Unable to update user!");
+
+            return user;
         }
     }
 }
