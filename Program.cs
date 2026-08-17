@@ -45,6 +45,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddMaps(typeof(Program));
+    // cfg.LicenseKey = Environment.GetEnvironmentVariable("AutoMapperKey");
+    cfg.LicenseKey = builder.Configuration["AutoMapper"];
 });
 
 var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
@@ -78,9 +80,13 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    // options.AddPolicy("AllowAll", policy =>
+    // {
+    //     policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+    // });
+    options.AddPolicy("Development", policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+       policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(["http://localhost:3000", "https://venn-iota.vercel.app"]); 
     });
 });
 
@@ -94,8 +100,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
+
 app.UseHttpsRedirection();
-app.UseCors("AllowAll");
+app.UseCors("Development");
 app.UseAuthentication();
 
 app.UseAuthorization();
