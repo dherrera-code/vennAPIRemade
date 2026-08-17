@@ -19,11 +19,26 @@ namespace vennAPIRemade.Services
             _userRepository = userRepository;
             _mapper = mapper;
         }
+
+        public async Task<bool> DeleteUser(int id)
+        {
+            bool result = await _userRepository.DeleteUser(id);
+            return result;
+        }
+
         public async Task<IEnumerable<UserDTO>> GetAllUsers()
         {
             var userList = await _userRepository.GetAllUsers();
 
             return _mapper.Map<IEnumerable<UserDTO>>(userList);
+        }
+
+        public async Task<UserDTO> GetUserById(int id)
+        {
+            UserEntity user = await _userRepository.GetUserById(id);
+            if(user is null) return null;
+
+            return _mapper.Map<UserDTO>(user);
         }
 
         public async Task<UserDTO> UpdateUser(string userId, UserDTO updatedUser)

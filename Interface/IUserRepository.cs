@@ -17,5 +17,6 @@ namespace vennAPIRemade.Interface
         Task<IEnumerable<UserEntity>> GetAllUsers();
         Task<UserEntity> GetUserById(int userId);
         Task<UserEntity> UpdateUserInfo(UserEntity user);
+        Task<bool> DeleteUser(int id);
     }
 }

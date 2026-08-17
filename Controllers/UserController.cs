@@ -28,6 +28,14 @@ namespace vennAPIRemade.Controllers
         }
 
         // Get User By Id
+        [HttpGet("GetById")]
+        public async Task<ActionResult<UserDTO>> GetUserById(int id)
+        {
+            var user = await _userService.GetUserById(id);
+            if (user is null)
+                return NotFound("User Id Doesn't Exist.");
+            return Ok(user);
+        }
 
         [HttpPut("UpdateUserProfile")]
         public async Task<ActionResult<UserDTO>> UpdateUserInfo(UserDTO updatedUser)
@@ -47,6 +55,24 @@ namespace vennAPIRemade.Controllers
             {
                 return BadRequest(new { Message = ex.Message });
             }
+        }
+
+        [HttpDelete("DeleteUser")]
+        public async Task<ActionResult<bool>> DeleteUser()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+            try
+            {
+                var success = await _userService.DeleteUser(int.Parse(userId));
+
+                return success;
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message});
+            }
+
         }
     }
 }
