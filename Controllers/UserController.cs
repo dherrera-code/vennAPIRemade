@@ -37,6 +37,14 @@ namespace vennAPIRemade.Controllers
             return Ok(user);
         }
 
+        [HttpGet("GetUserByUsername")]
+        public async Task<ActionResult<UserDTO>> GetUserByUsername(string username)
+        {
+            UserDTO user = await _userService.GetUserByName(username);
+            if(user is null) return BadRequest("Username Does Not Exist");
+            return Ok(user);
+        }
+
         [HttpPut("UpdateUserProfile")]
         public async Task<ActionResult<UserDTO>> UpdateUserInfo(UserDTO updatedUser)
         {

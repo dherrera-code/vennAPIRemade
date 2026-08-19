@@ -41,6 +41,13 @@ namespace vennAPIRemade.Services
             return _mapper.Map<UserDTO>(user);
         }
 
+        public async Task<UserDTO> GetUserByName(string username)
+        {
+            UserEntity user = await _userRepository.GetUserByUsernameOrEmail(username);
+            return _mapper.Map<UserDTO>(user);
+
+        }
+
         public async Task<UserDTO> UpdateUser(string userId, UserDTO updatedUser)
         {
             UserEntity user = await _userRepository.GetUserById(int.Parse(userId));
