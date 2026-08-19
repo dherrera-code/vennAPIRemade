@@ -8,3 +8,12 @@ Look into Install automapper function to map Entity to DTO and vice-versa! ✓
 
 Look into Potential Bug where Account Created is changing when logging in.
     Look into having SQL generate the date rather than the Entity!
+
+Controllers needed to be recreated:
+Blob Controller
+Room Controller
+Friend Controller
+Room Member Controller
+Avalability Controller
+
+Keep in mind of adding Constraints to maintain the correct database relationship!
