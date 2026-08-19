@@ -57,7 +57,7 @@ namespace vennAPIRemade.Controllers
 
                 if (result is null) return BadRequest(new { Message = "Unable to Update user" });
 
-                return result;
+                return Ok(result);
             }
             catch (Exception ex)
             {

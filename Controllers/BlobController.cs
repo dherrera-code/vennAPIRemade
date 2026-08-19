@@ -1,0 +1,24 @@
+using Microsoft.AspNetCore.Mvc;
+using vennAPIRemade.Services;
+
+namespace vennAPIRemade.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class BlobController(BlobServices blobServices) : ControllerBase
+    {
+        private readonly BlobServices _blobServices = blobServices;
+
+        [HttpPost("UploadFile")]
+        public async Task<ActionResult> Upload(IFormFile file, [FromForm] string fileName)
+        {
+            if(file is null || file.Length == 0 ) return BadRequest("Invalid File");
+
+            using var stream = file.OpenReadStream();
+
+            var fileUrl = await _blobServices.UploadFileAsync(stream, fileName);
+
+            return Ok( new { FileUrl = fileUrl });
+        }
+    }
+}

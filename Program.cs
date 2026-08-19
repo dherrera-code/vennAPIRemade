@@ -40,6 +40,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<BlobServices>();
 
 // builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddAutoMapper(cfg =>
@@ -80,10 +81,6 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddCors(options =>
 {
-    // options.AddPolicy("AllowAll", policy =>
-    // {
-    //     policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-    // });
     options.AddPolicy("Development", policy =>
     {
        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(["http://localhost:3000", "https://venn-iota.vercel.app"]); 
