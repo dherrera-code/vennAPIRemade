@@ -9,9 +9,9 @@ namespace vennAPIRemade.Services
 
         public BlobServices(IConfiguration configuration)
         {
-            var connectionString = configuration["AzureBlobStorage:ConnectionString"] ?? throw new Exception("BlobStorage:ConnectionString is missing");
+            var connectionString = configuration["AzureBlobStorage:ConnectionString"];
             _containerName = configuration["AzureBlobStorage:ContainerName"];
-            _blobServiceClient = new BlobServiceClient(connectionString) ?? throw new Exception("BlobStorage:ContainerName is missing");
+            _blobServiceClient = new BlobServiceClient(connectionString);
         }
         public async Task<string> UploadFileAsync(Stream stream, string fileName)
         {
