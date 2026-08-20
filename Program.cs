@@ -40,7 +40,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-// builder.Services.AddSingleton<BlobServices>();
+builder.Services.AddSingleton<BlobService>();
 
 // builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddAutoMapper(cfg =>
@@ -50,7 +50,7 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.LicenseKey = builder.Configuration["AutoMapper"];
 });
 
-var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
+var connectionString = builder.Configuration.GetConnectionString("ConnectionString:DatabaseConnection");
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
 
 var secretKey = builder.Configuration["JWT:Key"] ?? "superSecretKey@345superSecretKey@345";
