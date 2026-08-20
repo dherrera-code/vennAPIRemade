@@ -14,11 +14,18 @@ namespace vennAPIRemade.Controllers
         {
             if(file is null || file.Length == 0 ) return BadRequest("Invalid File");
 
+            try
+            {   
             using var stream = file.OpenReadStream();
 
             var fileUrl = await _blobServices.UploadFileAsync(stream, fileName);
 
             return Ok( new { FileUrl = fileUrl });
+            }
+            catch(Exception ex)
+            {
+                return BadRequest( new {Message = ex.Message});
+            }
         }
     }
 }
