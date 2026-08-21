@@ -50,7 +50,7 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.LicenseKey = builder.Configuration["AutoMapper"];
 });
 
-var connectionString = builder.Configuration.GetConnectionString("ConnectionString:DatabaseConnection");
+var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
 
 var secretKey = builder.Configuration["JWT:Key"] ?? "superSecretKey@345superSecretKey@345";
@@ -71,8 +71,8 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
 
-        ValidIssuer = "https://vennbackendapi-akghachgbhgdccfe.westus3-01.azurewebsites.net/",
-        ValidAudience = "https://vennbackendapi-akghachgbhgdccfe.westus3-01.azurewebsites.net/",
+        ValidIssuer = "https://vennbackendapi-akghachgbhgdccfe.westus3-01.azurewebsites.net",
+        ValidAudience = "https://vennbackendapi-akghachgbhgdccfe.westus3-01.azurewebsites.net",
 
         // The key used to sign the token (must match the one used to create it)
         IssuerSigningKey = signingCredentials
@@ -83,7 +83,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("Development", policy =>
     {
-       policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(["http://localhost:3000", "https://venn-iota.vercel.app"]); 
+       policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000", "https://venn-iota.vercel.app"); 
     });
 });
 
@@ -99,8 +99,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseRouting();
 
-app.UseHttpsRedirection();
 app.UseCors("Development");
+app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();

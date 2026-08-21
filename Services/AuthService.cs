@@ -112,8 +112,8 @@ namespace vennAPIRemade.Services
             var SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
             var tokenOptions = new JwtSecurityToken(
-                issuer: "https://vennbackendapi-akghachgbhgdccfe.westus3-01.azurewebsites.net/",
-                audience: "https://vennbackendapi-akghachgbhgdccfe.westus3-01.azurewebsites.net/",
+                issuer: "https://vennbackendapi-akghachgbhgdccfe.westus3-01.azurewebsites.net",
+                audience: "https://vennbackendapi-akghachgbhgdccfe.westus3-01.azurewebsites.net",
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(45),
                 signingCredentials: SigningCredentials
