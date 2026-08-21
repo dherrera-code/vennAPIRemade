@@ -1,18 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vennAPIRemade.Models.Entity
 {
     public class RoomEntity: BaseEntity
     {
-        public string Title { get; set; }
-        public string Category { get; set; }
+        public required string Title { get; set; }
+        public required string Category { get; set; }
         public DateOnly EventDate { get; set; }
-        public TimeOnly? ChosenHour { get; set; }
-        public bool IsRoomActive { get; set; } = true;
+        public TimeOnly? GoldenHour { get; set; }
+        [NotMapped]
+        public bool IsRoomActive => EventDate >= DateOnly.FromDateTime(DateTime.UtcNow);
         public int UserId { get; set; }
         // Add Collection of Users who are members
+        public ICollection<RoomMember> Members { get; set; } = [];
     }
 }

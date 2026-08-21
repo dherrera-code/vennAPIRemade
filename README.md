@@ -10,10 +10,10 @@ Look into Potential Bug where Account Created is changing when logging in.
     Look into having SQL generate the date rather than the Entity!
 
 Controllers needed to be recreated:
-Blob Controller
-Room Controller
+Blob Controller (DONE)
+Room Controller: With Entity and DTO
 Friend Controller
 Room Member Controller
 Avalability Controller
 
-Keep in mind of adding Constraints to maintain the correct database relationship!
+Create a look up table to hold Status for friend requests: Pending, Accepted, Deleted/Rejected! 
