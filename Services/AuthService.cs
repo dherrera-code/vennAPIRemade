@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.IdentityModel.Tokens;
-using vennAPIRemade.Interface;
+using vennAPIRemade.Interface.IRepo;
+using vennAPIRemade.Interface.IService;
 using vennAPIRemade.Models.DTO;
 using vennAPIRemade.Models.Entity;
 

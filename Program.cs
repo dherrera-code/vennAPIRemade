@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using vennAPIRemade.Context;
-using vennAPIRemade.Interface;
+using vennAPIRemade.Interface.IRepo;
+using vennAPIRemade.Interface.IService;
 using vennAPIRemade.Repository;
 using vennAPIRemade.Services;
 
@@ -37,12 +38,13 @@ builder.Services.AddSwaggerGen(options =>
     }});
 });
 
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 builder.Services.AddSingleton<BlobService>();
 
-// builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddMaps(typeof(Program));

@@ -14,7 +14,7 @@ namespace vennAPIRemade.Context
             
         }
         public DbSet<UserEntity> Users { get; set; }
-        public DbSet<RoomEntity> Rooms { get; set; }
+        public DbSet<RoomEntity> Room { get; set; }
         public DbSet<RoomMember> RoomMembers { get; set; }
         public DbSet<Friend> Friends { get; set; }  
     

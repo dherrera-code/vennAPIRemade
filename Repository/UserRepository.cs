@@ -1,29 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using vennAPIRemade.Interface;
-using vennAPIRemade.Models.DTO;
 using vennAPIRemade.Models.Entity;
 using vennAPIRemade.Context;
-using Microsoft.Identity.Client;
+using vennAPIRemade.Interface.IRepo;
 
 namespace vennAPIRemade.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly DataContext _context;
+        private readonly DataContext _dbContext;
         private readonly IConfiguration _config;
         public UserRepository(DataContext dbContext, IConfiguration config)
         {
-            _context = dbContext;
+            _dbContext = dbContext;
             _config = config;
         }
         public async Task<UserEntity> CreateUser(UserEntity user)
         {
-            await _context.Users.AddAsync(user);
-            var result = await _context.SaveChangesAsync();
+            await _dbContext.Users.AddAsync(user);
+            var result = await _dbContext.SaveChangesAsync();
             if (result != 0)
                 return user;
             else
@@ -34,35 +28,35 @@ namespace vennAPIRemade.Repository
         {
             var userToDelete = await GetUserById(id);
             userToDelete.IsDeleted = true;
-            _context.Users.Update(userToDelete);
-            return await _context.SaveChangesAsync() != 0;
+            _dbContext.Users.Update(userToDelete);
+            return await _dbContext.SaveChangesAsync() != 0;
         }
 
-        public async Task<bool> DoesEmailExist(string email) => await _context.Users.SingleOrDefaultAsync(user => user.Email == email) != null;
+        public async Task<bool> DoesEmailExist(string email) => await _dbContext.Users.SingleOrDefaultAsync(user => user.Email == email) != null;
 
-        public async Task<bool> DoesUsernameExist(string username) => await _context.Users.SingleOrDefaultAsync(user => user.Username == username) != null;
+        public async Task<bool> DoesUsernameExist(string username) => await _dbContext.Users.SingleOrDefaultAsync(user => user.Username == username) != null;
 
         public async Task<IEnumerable<UserEntity>> GetAllUsers()
         {
-            return await _context.Users.AsNoTracking()
+            return await _dbContext.Users.AsNoTracking()
             .Where(u => u.IsDeleted == false)
             .ToListAsync();
         }
 
         public async Task<UserEntity> GetUserById(int userId)
         {
-            return await _context.Users.FindAsync(userId);
+            return await _dbContext.Users.FindAsync(userId);
         }
 
         public async Task<UserEntity> GetUserByUsernameOrEmail(string username)
         {
-            return await _context.Users.AsNoTracking().Where(u => u.IsDeleted == false).FirstOrDefaultAsync(user => user.Username == username || user.Email == username);
+            return await _dbContext.Users.AsNoTracking().Where(u => u.IsDeleted == false).FirstOrDefaultAsync(user => user.Username == username || user.Email == username);
         }
 
         public async Task<UserEntity> UpdateUserInfo(UserEntity user)
         {
-            _context.Users.Update(user);
-            bool success = await _context.SaveChangesAsync() != 0;
+            _dbContext.Users.Update(user);
+            bool success = await _dbContext.SaveChangesAsync() != 0;
             if (!success) throw new Exception("Unable to update user!");
 
             return user;

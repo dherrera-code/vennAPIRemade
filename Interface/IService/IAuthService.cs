@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using vennAPIRemade.Models.DTO;
 
-namespace vennAPIRemade.Interface
+namespace vennAPIRemade.Interface.IService
 {
     public interface IAuthService
     {

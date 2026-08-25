@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using vennAPIRemade.Interface;
-using vennAPIRemade.Mapper;
+using vennAPIRemade.Interface.IRepo;
+using vennAPIRemade.Interface.IService;
 using vennAPIRemade.Models.DTO;
 using vennAPIRemade.Models.Entity;
 

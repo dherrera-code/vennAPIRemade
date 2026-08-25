@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using vennAPIRemade.Interface;
+using vennAPIRemade.Interface.IService;
 using vennAPIRemade.Models.DTO;
 
 namespace vennAPIRemade.Controllers

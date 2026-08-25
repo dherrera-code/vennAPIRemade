@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using vennAPIRemade.Models.DTO;
 
-namespace vennAPIRemade.Interface
+namespace vennAPIRemade.Interface.IService
 {
     public interface IUserService
     {

@@ -7,7 +7,8 @@ namespace vennAPIRemade.Models.DTO
         public string Category { get; set; }
         public DateOnly EventDate { get; set; }
         public TimeOnly? ChosenHour { get; set; }
-        public bool? IsRoomActive { get; set; } = true;
+        public bool? IsRoomActive { get; set; }
         public int? UserId { get; set; }
+        public List<RoomMemberDTO> Members { get; set; } = [];
     }
 }
