@@ -26,7 +26,15 @@ namespace vennAPIRemade.Repository
 
         public async Task<List<RoomEntity>> GetAllRooms()
         {
-            return await _dbContext.Room.ToListAsync();
+            return await _dbContext.Room.Where(room => !room.IsDeleted).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<List<RoomEntity>> GetRelevantRoomsByUserId(int id)
+        {
+            return await _dbContext.Room.AsNoTracking()
+            .Where(room => room.UserId == id && !room.IsDeleted  || room.Members.Any(m => m.MemberId == id && m.IsAccepted && !m.IsDeleted))
+            .Include(joined => joined.Members)
+            .ToListAsync();
         }
 
         public async Task<RoomEntity> GetRoomById(int id)
@@ -34,6 +42,12 @@ namespace vennAPIRemade.Repository
 #pragma warning disable CS8603 // Possible null reference return.
             return await _dbContext.Room.FindAsync(id);
 #pragma warning restore CS8603 // Possible null reference return.
+        }
+
+        public async Task<bool> UpdateRoomDetails(RoomEntity currentRoom)
+        {
+            _dbContext.Room.Update(currentRoom);
+            return await _dbContext.SaveChangesAsync() != 0;
         }
     }
 }

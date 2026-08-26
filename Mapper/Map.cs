@@ -14,6 +14,7 @@ namespace vennAPIRemade.Mapper
         {
             CreateMap<UserEntity, UserDTO>().ReverseMap();
             CreateMap<RoomEntity, RoomDTO>().ReverseMap();
+            CreateMap<RoomMember, RoomMemberDTO>().ReverseMap();
         }
     }
 }

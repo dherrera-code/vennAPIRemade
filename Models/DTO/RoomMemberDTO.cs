@@ -8,7 +8,8 @@ namespace vennAPIRemade.Models.DTO
 {
     public class RoomMemberDTO
     {
+        public int UserId { get; set; }
         public bool IsAccepted { get; set; }
-        public UserEntity MemberInfo { get; set; }
+        public UserDTO? MemberInfo { get; set; }
     }
 }

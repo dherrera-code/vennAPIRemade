@@ -11,6 +11,8 @@ namespace vennAPIRemade.Interface.IRepo
     {
         Task<bool> AddNewRoom(RoomEntity newRoom);
         Task<List<RoomEntity>> GetAllRooms();
+        Task<List<RoomEntity>> GetRelevantRoomsByUserId(int id);
         Task<RoomEntity> GetRoomById(int id);
+        Task<bool> UpdateRoomDetails(RoomEntity currentRoom);
     }
 }

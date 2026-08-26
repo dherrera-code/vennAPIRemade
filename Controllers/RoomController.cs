@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using vennAPIRemade.Interface.IService;
@@ -64,6 +65,31 @@ namespace vennAPIRemade.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet("GetCreatedAndJoinedRoomsByUserId/{id}")]
+        public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRelevantRoomsByUserId(int id)
+        {
+            var roomList = await _roomService.GetRelevantRoomsById(id);
+            return Ok(roomList);
+        }
+    
+        [HttpPut("UpdateRoom/{id}")]
+        public async Task<ActionResult<RoomDTO>> UpdateRoom(int id, [FromBody] RoomDTO updatedRoom)
+        {
+            var result = await _roomService.UpdateRoom(id, updatedRoom);
+            return Ok(result);
+        }
+
+        [HttpDelete("DeleteRoomById")]
+        public async Task<ActionResult<bool>> RemoveRoom(int roomId)
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); //this is used to ensure the host of the room is the one deleting the room when endpoint is called!
+            
+            bool result = await _roomService.DeleteRoomById(roomId, userId);
+            if(result) return Ok(true);
+            return BadRequest(false);
+
         }
     }
 }
