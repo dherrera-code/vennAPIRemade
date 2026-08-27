@@ -11,6 +11,7 @@ namespace vennAPIRemade.Models.Entity
         [NotMapped]
         public bool IsRoomActive => EventDate >= DateOnly.FromDateTime(DateTime.UtcNow);
         public int UserId { get; set; }
+        public UserEntity? User { get; set; }
         // Add Collection of Users who are members
         public ICollection<RoomMember> Members { get; set; } = [];
     }
