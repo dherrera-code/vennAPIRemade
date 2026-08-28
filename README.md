@@ -11,9 +11,15 @@ Look into Potential Bug where Account Created is changing when logging in.
 
 Controllers needed to be recreated:
 Blob Controller (DONE)
-Room Controller: With Entity and DTO
+Room Controller: With Entity and DTO (DONE)
+Room Member Controller  (DONE)
 Friend Controller
-Room Member Controller
 Avalability Controller
+
+When ReDeploying API to Azure's Web Services, Make sure to run
+dotnet clean
+dotnet restore
+dotnet build 
+before deploying web app!
 
 Create a look up table to hold Status for friend requests: Pending, Accepted, Deleted/Rejected! 
