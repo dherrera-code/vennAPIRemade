@@ -39,12 +39,11 @@ namespace vennAPIRemade.Services
         public async Task<bool> SendFriendRequest(int requesterId, int receiverId)
         {
             var friendEntry = await _friendRepo.GetFriendEntry(requesterId, receiverId);
-            if (friendEntry != null)
-            {
-                friendEntry = await _friendRepo.GetFriendEntry(receiverId, requesterId);
+            if (friendEntry != null) return false;
+            
+            friendEntry = await _friendRepo.GetFriendEntry(receiverId, requesterId);
                 if (friendEntry != null)
                     return false;
-            }
             return await _friendRepo.CreatePendingFriendEntry(requesterId, receiverId);
         }
 
