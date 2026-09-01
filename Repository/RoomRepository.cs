@@ -39,9 +39,8 @@ namespace vennAPIRemade.Repository
 
         public async Task<RoomEntity> GetRoomById(int id)
         {
-#pragma warning disable CS8603 // Possible null reference return.
-            return await _dbContext.Room.FindAsync(id);
-#pragma warning restore CS8603 // Possible null reference return.
+            return await _dbContext.Room.Include(mem => mem.Members.Where(memb => memb.IsAccepted && !memb.IsDeleted)).ThenInclude(info => info.MemberInfo)
+            .FirstOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task<bool> UpdateRoomDetails(RoomEntity currentRoom)

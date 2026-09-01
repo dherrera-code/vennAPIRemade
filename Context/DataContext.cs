@@ -25,6 +25,12 @@ namespace vennAPIRemade.Context
                 .WithMany()
                 .HasForeignKey(user => user.MemberId)
                 .OnDelete(DeleteBehavior.Restrict); 
+
+            modelBuilder.Entity<Friend>()
+                .HasOne(f => f.Requester)
+                .WithMany()
+                .HasForeignKey(f => f.RequesterId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     
     }
