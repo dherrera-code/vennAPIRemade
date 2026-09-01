@@ -14,5 +14,6 @@ namespace vennAPIRemade.Models.Entity
         public DateTime RequestedAt { get; set; }
         public DateTime? AcceptedAt { get; set; }    
         public UserEntity? Requester { get; set; }
+        public UserEntity? Receiver { get; set; }
     }
 }

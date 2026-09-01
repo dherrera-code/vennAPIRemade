@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using vennAPIRemade.Context;
 using vennAPIRemade.Interface.IRepo;
@@ -30,6 +26,14 @@ namespace vennAPIRemade.Repository
             return await _dbContext.SaveChangesAsync() != 0;
         }
 
+        public async Task<IEnumerable<Friend>> GetAcceptedFriends(int userId)
+        {
+            return await _dbContext.Friends.Where(f => (f.RequesterId == userId || f.ReceiverId == userId) && f.Status == 2)
+            .Include(friendInfo => friendInfo.Requester)
+            .Include(receiverInfo => receiverInfo.Receiver)
+            .ToListAsync();
+        }
+
         public async Task<Friend> GetFriendEntry(int requesterId, int receiverId)
         {
             return await _dbContext.Friends
@@ -42,6 +46,18 @@ namespace vennAPIRemade.Repository
             .Where(e => e.ReceiverId == userId && e.Status == 1)
             .Include(requesterInfo => requesterInfo.Requester)
             .ToListAsync();
+        }
+
+        public async Task<bool> RemoveFriendRequest(Friend friendEntry)
+        {
+            _dbContext.Remove(friendEntry);
+            return await _dbContext.SaveChangesAsync() != 0;
+        }
+
+        public async Task<bool> UpdateFriendStatus(Friend friendEntry)
+        {
+            _dbContext.Friends.Update(friendEntry);
+            return await _dbContext.SaveChangesAsync() != 0;
         }
     }
 }

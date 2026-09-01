@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using vennAPIRemade.Interface.IService;
 using vennAPIRemade.Models.DTO;
@@ -32,29 +28,29 @@ namespace vennAPIRemade.Controllers
             return Ok(await _friendService.GetPendingFriends(userId));
         }
 
-        // [HttpGet("GetAllAcceptedFriends/{userId}")]
-        // public async Task<ActionResult<IEnumerable<FriendDTO>>> GetAllAcceptedFriends(int userId)
-        // {
-        //     return Ok(await _friendService.GetAcceptedFriends(userId));
-        // }
+        [HttpGet("GetAllAcceptedFriends/{userId}")]
+        public async Task<ActionResult<IEnumerable<FriendDTO>>> GetAllAcceptedFriends(int userId)
+        {
+            return Ok(await _friendService.GetAcceptedFriends(userId));
+        }
 
-        // [HttpPut("AddFriendStatus/{requesterId}/{receiverId}")]
-        // public async Task<ActionResult<bool>> UpdateFriendStatusToAccepted(int requesterId, int receiverId)
-        // {
-        //     FriendDTO result = await _friendService.UpdateStatusToAccepted(requesterId, receiverId);
-        //     if(result is null) return BadRequest(false);
+        [HttpPut("AddFriendStatus/{requesterId}/{receiverId}")]
+        public async Task<ActionResult<bool>> UpdateFriendStatusToAccepted(int requesterId, int receiverId)
+        {
+            bool result = await _friendService.UpdateStatusToAccepted(requesterId, receiverId);
+            if(!result) return BadRequest(result);
 
-        //     return Ok(true);
-        // }
+            return Ok(result);
+        }
 
-        // [HttpPut("DenyFriendRequestByRequestId/{requesterId}/{receiverId}")]
-        // public async Task<ActionResult<bool>> RemoveFriendStatusToDenied(int requesterId, int receiverId)
-        // {
-        //     bool success = await _friendService.RemoveFriendInvite(requesterId, receiverId);
+        [HttpPut("DenyFriendRequestByRequestId/{requesterId}/{receiverId}")]
+        public async Task<ActionResult<bool>> RemoveFriendStatusToDenied(int requesterId, int receiverId)
+        {
+            bool success = await _friendService.RemoveFriendInvite(requesterId, receiverId);
 
-        //     if(!success) return BadRequest(false);
+            if(!success) return BadRequest(false);
 
-        //     return Ok(success);
-        // }
+            return Ok(success);
+        }
     }
 }
