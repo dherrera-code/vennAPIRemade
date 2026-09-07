@@ -7,16 +7,17 @@ using vennAPIRemade.Models.Entity;
 
 namespace vennAPIRemade.Context
 {
-    public class DataContext: DbContext
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions options) : base(options)
         {
-            
+
         }
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<RoomEntity> Room { get; set; }
         public DbSet<RoomMember> RoomMembers { get; set; }
         public DbSet<Friend> Friends { get; set; }
+        public DbSet<UserAvailability> UserAvailability { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,7 +25,7 @@ namespace vennAPIRemade.Context
                 .HasOne(user => user.MemberInfo)
                 .WithMany()
                 .HasForeignKey(user => user.MemberId)
-                .OnDelete(DeleteBehavior.Restrict); 
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Friend>()
                 .HasOne(f => f.Requester)
@@ -37,7 +38,10 @@ namespace vennAPIRemade.Context
                 .WithMany()
                 .HasForeignKey(f => f.ReceiverId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserAvailability>()
+                .HasIndex(x => new { x.UserId, x.Day, x.Hour })
+                .IsUnique();
         }
-    
     }
 }

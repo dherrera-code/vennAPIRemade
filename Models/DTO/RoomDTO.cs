@@ -9,6 +9,7 @@ namespace vennAPIRemade.Models.DTO
         public TimeOnly? GoldenHour { get; set; }
         public bool? IsRoomActive { get; set; }
         public int? UserId { get; set; }
+        public UserDTO? User { get; set; }
         public List<RoomMemberDTO> Members { get; set; } = [];
     }
 }

@@ -39,7 +39,9 @@ namespace vennAPIRemade.Repository
 
         public async Task<RoomEntity> GetRoomById(int id)
         {
-            return await _dbContext.Room.Include(mem => mem.Members.Where(memb => memb.IsAccepted && !memb.IsDeleted)).ThenInclude(info => info.MemberInfo)
+            return await _dbContext.Room
+            .Include(host => host.User)
+            .Include(mem => mem.Members.Where(memb => memb.IsAccepted && !memb.IsDeleted)).ThenInclude(info => info.MemberInfo)
             .FirstOrDefaultAsync(r => r.Id == id);
         }
 

@@ -14,7 +14,7 @@ Blob Controller                             (DONE)
 Room Controller: With Entity and DTO        (DONE)
 Room Member Controller                      (DONE)
 Friend Controller                           (DONE)
-Avalability Controller
+Avalability Controller                      (DONE)
 
 When ReDeploying API to Azure's Web Services, Make sure to run
 dotnet clean
@@ -26,3 +26,5 @@ before deploying web app!
 Create a look up table to hold Status for friend requests: Pending, Accepted, Deleted/Rejected! 
 
 Researching CI/CD workflow to automatically deploy web app into Azure using Github Action workflow!
+
+create endpoint that get users who are not the user and doesn't include accepted friends

@@ -48,6 +48,8 @@ builder.Services.AddScoped<IRoomMemberService, RoomMemberService>();
 builder.Services.AddScoped<IRoomMemberRepository, RoomMemberRepository>();
 builder.Services.AddScoped<IFriendService, FriendService>();
 builder.Services.AddScoped<IFriendRepository, FriendRepository>();
+builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
+builder.Services.AddScoped<IAvailabilityRepository, AvailabilityRepository>();
 builder.Services.AddSingleton<BlobService>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
