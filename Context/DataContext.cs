@@ -42,6 +42,11 @@ namespace vennAPIRemade.Context
             modelBuilder.Entity<UserAvailability>()
                 .HasIndex(x => new { x.UserId, x.Day, x.Hour })
                 .IsUnique();
+
+            modelBuilder.Entity<UserAvailability>()
+                .HasOne(u => u.User)
+                .WithMany(u => u.Availability)
+                .HasForeignKey(a => a.UserId);
         }
     }
 }

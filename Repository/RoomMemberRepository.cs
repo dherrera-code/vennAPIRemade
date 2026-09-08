@@ -32,7 +32,10 @@ namespace vennAPIRemade.Repository
 
         public async Task<IEnumerable<RoomMember>> GetAllAcceptedByRoom(int roomId)
         {
-            return await _dbContext.RoomMembers.Where(mem => mem.RoomId == roomId && mem.IsAccepted).Include(mem => mem.MemberInfo)
+            return await _dbContext.RoomMembers
+            .Where(mem => mem.RoomId == roomId && mem.IsAccepted)
+            .Include(mem => mem.MemberInfo)
+                .ThenInclude(a => a.Availability)
             .ToListAsync();
         }
 
@@ -45,7 +48,7 @@ namespace vennAPIRemade.Repository
                 Title = r.Room.Title,
                 Category = r.Room.Category,
                 EventDate = r.Room.EventDate,
-                RequesterId = r.Room.UserId,
+                RequesterId = (int)r.Room.UserId,
                 RequesterName = r.Room.User.Username,
                 RequesterIcon = r.Room.User.UserIcon
             })

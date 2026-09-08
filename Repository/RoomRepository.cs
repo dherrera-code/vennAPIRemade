@@ -42,6 +42,7 @@ namespace vennAPIRemade.Repository
             return await _dbContext.Room
             .Include(host => host.User)
             .Include(mem => mem.Members.Where(memb => memb.IsAccepted && !memb.IsDeleted)).ThenInclude(info => info.MemberInfo)
+            .ThenInclude(a => a.Availability)
             .FirstOrDefaultAsync(r => r.Id == id);
         }
 

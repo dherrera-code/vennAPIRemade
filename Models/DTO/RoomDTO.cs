@@ -10,6 +10,6 @@ namespace vennAPIRemade.Models.DTO
         public bool? IsRoomActive { get; set; }
         public int? UserId { get; set; }
         public UserDTO? User { get; set; }
-        public List<RoomMemberDTO> Members { get; set; } = [];
+        public ICollection<RoomMemberDTO> Members { get; set; } = [];
     }
 }

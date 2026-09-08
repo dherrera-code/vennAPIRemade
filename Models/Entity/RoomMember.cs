@@ -14,7 +14,5 @@ namespace vennAPIRemade.Models.Entity
         public bool IsAccepted { get; set; } = false;
         [ForeignKey("MemberId")]
         public UserEntity? MemberInfo { get; set; }
-
-
     }
 }

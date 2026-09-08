@@ -13,5 +13,6 @@ namespace vennAPIRemade.Models.DTO
         public string? Description { get; set; }
         public DateTime? AccountCreated { get; set; }
         public string? UserIcon { get; set; }
+        public ICollection<UserAvailabilityDTO> Availability { get; set; } = [];
     }
 }

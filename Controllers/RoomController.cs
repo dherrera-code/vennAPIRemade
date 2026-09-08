@@ -47,7 +47,7 @@ namespace vennAPIRemade.Controllers
                 var roomsList = await _roomService.GetAllRooms();
                 return Ok(roomsList);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -61,7 +61,7 @@ namespace vennAPIRemade.Controllers
                 RoomDTO room = await _roomService.GetRoomById(id);
                 return Ok(room);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -73,21 +73,28 @@ namespace vennAPIRemade.Controllers
             var roomList = await _roomService.GetRelevantRoomsById(id);
             return Ok(roomList);
         }
-    
+
         [HttpPut("UpdateRoom/{id}")]
         public async Task<ActionResult<RoomDTO>> UpdateRoom(int id, [FromBody] RoomDTO updatedRoom)
         {
-            var result = await _roomService.UpdateRoom(id, updatedRoom);
-            return Ok(result);
+            try
+            {
+                var result = await _roomService.UpdateRoom(id, updatedRoom);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("DeleteRoomById")]
         public async Task<ActionResult<bool>> RemoveRoom(int roomId)
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); //this is used to ensure the host of the room is the one deleting the room when endpoint is called!
-            
+
             bool result = await _roomService.DeleteRoomById(roomId, userId);
-            if(result) return Ok(true);
+            if (result) return Ok(true);
             return BadRequest(false);
 
         }

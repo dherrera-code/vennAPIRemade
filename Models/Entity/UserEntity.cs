@@ -14,6 +14,7 @@ namespace vennAPIRemade.Models.Entity
         public string? Description { get; set; }
         public string? UserIcon { get; set; }
         public DateTime AccountCreated { get; set; } = DateTime.UtcNow;
+        public ICollection<UserAvailability> Availability { get; set; } = [];
         
     }
 }

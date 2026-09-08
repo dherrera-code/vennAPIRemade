@@ -10,9 +10,8 @@ namespace vennAPIRemade.Models.Entity
     public class UserAvailability 
     {
         public int Id { get; set; }
-
-        [ForeignKey("UserEntity")]
         public int UserId { get; set; }
+        public UserEntity User { get; set; }
         public DayOfWeek Day { get; set; }
         public int Hour { get; set; }
         [ForeignKey("AvailabilityStatus")]
