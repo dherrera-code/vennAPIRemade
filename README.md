@@ -20,7 +20,7 @@ When ReDeploying API to Azure's Web Services, Make sure to run
 dotnet clean
 dotnet restore
 dotnet build 
-dotnet publish
+dotnet publish -c Release
 before deploying web app!
 
 Create a look up table to hold Status for friend requests: Pending, Accepted, Deleted/Rejected! 
