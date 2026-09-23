@@ -28,3 +28,7 @@ Create a look up table to hold Status for friend requests: Pending, Accepted, De
 Researching CI/CD workflow to automatically deploy web app into Azure using Github Action workflow!
 
 create endpoint that get users who are not the user and doesn't include accepted friends
+
+implement a feature that will redirect the signed in user who isn't authorized to be redirected to the login page.
+
+fix bug where users cant create a new room.
